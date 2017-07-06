@@ -1,0 +1,107 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<artifactId>olami-java-client</artifactId>
+	<packaging>jar</packaging>
+	
+	<name>OLAMI Java Client Library</name>
+	<description>OLAMI APIs Java client library</description>
+	<url>http://olami.ai</url>
+	
+	<parent>
+		<groupId>ai.olami</groupId>
+		<artifactId>olami-java-client-sdk</artifactId>
+		<version>0.1.0</version>
+	</parent>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+	</dependencies>
+
+    <profiles>
+    	<profile>
+    		<id>all</id>
+    		<build>
+		    	<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-shade-plugin</artifactId>
+						<version>2.4.3</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+		                            <goal>shade</goal>
+								</goals>
+								<configuration>
+									<artifactSet>
+										<includes>
+		                                    <include>com.google.code.gson:gson</include>
+										</includes>
+									</artifactSet>
+									<shadedArtifactAttached>true</shadedArtifactAttached>
+									<shadedClassifierName>full</shadedClassifierName>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+    </profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
+				</configuration>
+			</plugin>
+            <!-- Copy files to the 'bin' folder of the SDK root path -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <copy todir="../bin/">
+                                    <fileset dir="${project.build.directory}">
+                                        <!-- Copy packaged jar files -->
+                                        <include name="*${project.version}.jar"/>
+                                        <include name="*${project.version}-full.jar"/>
+                                        <include name="*${project.version}-javadoc.jar"/>
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- End of copy -->
+		</plugins>
+	</build>
+
+</project>
