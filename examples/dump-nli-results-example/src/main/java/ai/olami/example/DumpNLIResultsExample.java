@@ -90,7 +90,7 @@ public class DumpNLIResultsExample {
 							// * Get slot value
 							System.out.format("|\t\t- Value: %s\n",
 									slots[y].getValue());
-							// * Get slot name
+							// * Get slot modifier
 							if (slots[y].hasModifiers()) {
 								String[] sm = slots[y].getModifiers();
 								for (int a = 0; a < sm.length; a++) {

@@ -34,10 +34,10 @@ import ai.olami.util.GsonFactory;
 public class SpeechInputExample {
 	
 	// * Replace your APP KEY with this variable.
-	private static String appKey = "172c5b7b7121407ba572da444a17977c";
+	private static String appKey = "*****your-app-key*****";
 	
 	// * Replace your APP SECRET with this variable.
-	private static String appSecret = "2115d0888bd049549581b7a0a67cde62";
+	private static String appSecret = "*****your-app-secret*****";
 	
 	// * Replace the path of audio file you want to analyze with this variable.
 	private static String inputFilePath = "./sample.wav";

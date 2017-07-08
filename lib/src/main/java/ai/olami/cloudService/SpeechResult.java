@@ -75,7 +75,7 @@ public class SpeechResult {
 	/**
 	 * Get the processing status of audio uploading or recognition. 
 	 * 
-	 * @return 0 for the processing is fine, or others for something wrong.
+	 * @return 0 for the processing is fine, 1 for result not change, or others for something wrong.
 	 */
 	public int getStatus() {
 		return mStatus;

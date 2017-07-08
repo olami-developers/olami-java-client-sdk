@@ -19,16 +19,13 @@
 package ai.olami.example;
 
 import ai.olami.cloudService.APIResponse;
-import ai.olami.util.GsonFactory;
-
-import com.google.gson.Gson;
+import ai.olami.cloudService.APIResponseBuilder;
 
 public class DumpNLIResultsExampleExecution {
 
     public static void main(String[] args) throws Exception {
 		if (args.length == 1) {
-			Gson gson = GsonFactory.getNormalGson();
-			APIResponse response = (APIResponse) gson.fromJson(args[0], APIResponse.class);
+			APIResponse response = APIResponseBuilder.create(args[0]);
 			if (response.hasData() && response.getData().hasNLIResults()) {
 				DumpNLIResultsExample.dumpNLIResults(response.getData().getNLIResults());
 			} else {
