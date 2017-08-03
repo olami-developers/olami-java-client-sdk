@@ -35,7 +35,7 @@
         <dependency>
             <groupId>ai.olami.example</groupId>
             <artifactId>dump-nli-results-example</artifactId>
-            <version>${project.parent.version}</version>
+            <version>20170708</version>
         </dependency>
     </dependencies>
 
