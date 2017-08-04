@@ -311,7 +311,7 @@ public class SpeechRecognizer extends APIRequestBase {
 			if (mEncodeToSpeex) {
 				if ((audioSize < mAudioBufferListMinSize) 
 						|| ((audioSize % mSpeexProcessSize) != 0)) {
-					throw new IllegalArgumentException("The size of input data must be greater than " + mAudioBufferListMinSize + " (Bytes), and it must be a multiple of " + getAudioFrameSize() + " (Bytes).");
+					throw new IllegalArgumentException("The size of input data must be greater than " + mAudioBufferListMinSize + " (Bytes), and it must be a multiple of " + mSpeexProcessSize + " (Bytes).");
 				}
 				audioSize = speexEncodeRawWavePCM(tempData);
 			}
