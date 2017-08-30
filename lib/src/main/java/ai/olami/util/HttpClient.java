@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -133,7 +134,8 @@ public class HttpClient {
 		StringBuffer inputStringBuffer = new StringBuffer();
 		
 		try {
-			inputReader = new BufferedReader(new InputStreamReader(mHttpConnection.getInputStream()));
+			inputReader = new BufferedReader(new InputStreamReader(
+					mHttpConnection.getInputStream(), StandardCharsets.UTF_8));
 			String inputLine;
 			while ((inputLine = inputReader.readLine()) != null) {
 				inputStringBuffer.append(inputLine);
