@@ -51,6 +51,25 @@ public abstract class APIRequestBase {
 	}
 	
 	/**
+	 * @param type - SDK type.
+	 */
+	public void setSdkType(String type) {
+		if (mConfiguration != null) {
+			mConfiguration.setSdkType(type);
+		}
+	}
+	
+	/**
+	 * @return The given SDK type string.
+	 */
+	public String getSdkType() {
+		if (mConfiguration != null) {
+			return mConfiguration.getSdkType();
+		}
+		return "";
+	}
+	
+	/**
 	 * Set the identification to identify the End-user.
 	 * This is helpful in some of NLU/NLI functions, such as context support.
 	 * 

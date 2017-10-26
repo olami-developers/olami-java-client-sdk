@@ -40,6 +40,7 @@ public class APIConfiguration {
 	private String mAppKey = null;
 	private String mAppSecret = null;
 	private String mApiDomainName = null;
+	private String mSdkType = null;
 	private int mLocalizeOption = -1;
 	private Map<String, String> mSignatureMap;
 	private Map<String, Long> mTimestampMap;
@@ -70,11 +71,26 @@ public class APIConfiguration {
 		
 		initLocalization(localizeOption);
 		
+		mSdkType = "java";
 		mAppKey = appKey;
 		mAppSecret = appSecret;
 		mTimestampMap = new HashMap<String, Long>();
 		mSignatureMap = new HashMap<String, String>();
 		
+	}
+	
+	/**
+	 * @param type - SDK type.
+	 */
+	public void setSdkType(String type) {
+		mSdkType = type.toLowerCase();
+	}
+	
+	/**
+	 * @return The given SDK type string.
+	 */
+	public String getSdkType() {
+		return mSdkType;
 	}
 
 	/**
@@ -148,7 +164,9 @@ public class APIConfiguration {
 		StringBuffer urlStringBuffer = new StringBuffer();
 		urlStringBuffer.append(mApiDomainName);
 		urlStringBuffer.append(API_BASE_URL);
-		urlStringBuffer.append("?appkey=");
+		urlStringBuffer.append("?_from=");
+		urlStringBuffer.append(mSdkType);
+		urlStringBuffer.append("&appkey=");
 		urlStringBuffer.append(mAppKey);
 		urlStringBuffer.append("&api=");
 		urlStringBuffer.append(apiName);
