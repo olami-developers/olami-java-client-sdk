@@ -107,6 +107,7 @@ public class TextRecognizer extends APIRequestBase {
 		final URL url = new URL(getConfiguration().getBaseRequestURL(apiName));
 		final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 		httpConnection.setRequestMethod("POST");
+		httpConnection.setRequestProperty("contentType", "utf-8");
 		httpConnection.setConnectTimeout(getTimeout());
 		
 		HttpClient httpClient = null;

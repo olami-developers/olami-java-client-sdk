@@ -483,6 +483,7 @@ public class SpeechRecognizer extends APIRequestBase {
 		if ((cookies != null) && (!cookies.equals(""))) {
 			httpConnection.setRequestProperty("Cookie", cookies);
 		}
+		httpConnection.setRequestProperty("contentType", "utf-8");
 		httpConnection.setConnectTimeout(getTimeout());
 		
 		HttpClient httpClient = null;
@@ -527,6 +528,7 @@ public class SpeechRecognizer extends APIRequestBase {
 		final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 		httpConnection.setRequestMethod("GET");
 		httpConnection.setRequestProperty("Cookie", cookies);
+		httpConnection.setRequestProperty("contentType", "utf-8");
 		httpConnection.setConnectTimeout(getTimeout());
 		
 		HttpClient httpClient = null;
