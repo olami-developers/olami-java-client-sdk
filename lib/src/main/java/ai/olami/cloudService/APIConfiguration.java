@@ -87,6 +87,16 @@ public class APIConfiguration {
 	}
 	
 	/**
+	 * Not recommended for use. 
+	 * Normally this is for commercial use, so you probably don't need to use this method.
+	 * 
+	 * @param domain - API server domain name
+	 */
+	public void setApiServerDomain(String domain) {
+		mApiDomainName = domain;
+	}
+	
+	/**
 	 * @return The given SDK type string.
 	 */
 	public String getSdkType() {
