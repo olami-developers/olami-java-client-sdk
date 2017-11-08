@@ -38,7 +38,7 @@ public class PoemData {
 	 * @return TRUE if contains title.
 	 */
 	public boolean hasTitle() {
-		return (mTitle != null);
+		return ((mTitle != null) && (!mTitle.equals("")));
 	}
 	
 	@Expose
@@ -56,7 +56,7 @@ public class PoemData {
 	 * @return TRUE if contains author information.
 	 */
 	public boolean hasAuthor() {
-		return (mAuthor != null);
+		return ((mAuthor != null) && (!mAuthor.equals("")));
 	}
 	
 	@Expose
@@ -74,7 +74,7 @@ public class PoemData {
 	 * @return TRUE if contains content.
 	 */
 	public boolean hasContent() {
-		return (mContent != null);
+		return ((mContent != null) && (!mContent.equals("")));
 	}
 	
 	@Expose
@@ -92,7 +92,7 @@ public class PoemData {
 	 * @return TRUE if contains poem name.
 	 */
 	public boolean hasPoemName() {
-		return (mPoemName != null);
+		return ((mPoemName != null) && (!mPoemName.equals("")));
 	}
 	
 }

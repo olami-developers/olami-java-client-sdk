@@ -38,7 +38,7 @@ public class WeatherData {
 	 * @return TRUE if contains city name.
 	 */
 	public boolean hasCity() {
-		return (mCity != null);
+		return ((mCity != null) && (!mCity.equals("")));
 	}
 	
 	@Expose
@@ -106,7 +106,7 @@ public class WeatherData {
 	 * @return TRUE if contains wind direction.
 	 */
 	public boolean hasWind() {
-		return (mWind != null);
+		return ((mWind != null) && (!mWind.equals("")));
 	}
 
 	@Expose
@@ -124,7 +124,7 @@ public class WeatherData {
 	 * @return TRUE if contains maximum temperature.
 	 */
 	public boolean hasMaxTemperature() {
-		return (mTemperatureHigh != null);
+		return ((mTemperatureHigh != null) && (!mTemperatureHigh.equals("")));
 	}
 
 	@Expose
@@ -142,7 +142,7 @@ public class WeatherData {
 	 * @return TRUE if contains minimum temperature.
 	 */
 	public boolean hasMinTemperature() {
-		return (mTemperatureLow != null);
+		return ((mTemperatureLow != null) && (!mTemperatureLow.equals("")));
 	}
 
 	@Expose
@@ -160,7 +160,7 @@ public class WeatherData {
 	 * @return TRUE if contains description.
 	 */
 	public boolean hasDescription() {
-		return (mDescription != null);
+		return ((mDescription != null) && (!mDescription.equals("")));
 	}
 
 	@Expose
@@ -178,7 +178,7 @@ public class WeatherData {
 	 * @return TRUE if contains exponent type.
 	 */
 	public boolean hasExponentType() {
-		return (mExponentType != null);
+		return ((mExponentType != null) && (mExponentType.length > 0));
 	}
 
 	@Expose
@@ -196,7 +196,7 @@ public class WeatherData {
 	 * @return TRUE if contains exponent value.
 	 */
 	public boolean hasExponentValue() {
-		return (mExponentValue != null);
+		return ((mExponentValue != null) && (mExponentValue.length > 0));
 	}
 
 	@Expose

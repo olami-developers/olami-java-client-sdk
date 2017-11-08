@@ -49,7 +49,7 @@ public class StockMarketData {
 	 * @return TRUE if contains stock ID.
 	 */
 	public boolean hasID() {
-		return (mID != null);
+		return ((mID != null) && (!mID.equals("")));
 	}
 	
 	@Expose
@@ -67,7 +67,7 @@ public class StockMarketData {
 	 * @return TRUE if contains stock name.
 	 */
 	public boolean hasName() {
-		return (mName != null);
+		return ((mName != null) && (!mName.equals("")));
 	}
 	
 	@Expose
@@ -85,7 +85,7 @@ public class StockMarketData {
 	 * @return TRUE if contains current price information.
 	 */
 	public boolean hasCurrentPrice() {
-		return (mCurrentPrice != null);
+		return ((mCurrentPrice != null) && (!mCurrentPrice.equals("")));
 	}
 	
 	@Expose
@@ -103,7 +103,7 @@ public class StockMarketData {
 	 * @return TRUE if contains opening price information.
 	 */
 	public boolean hasOpeningPrice() {
-		return (mOpeningPrice != null);
+		return ((mOpeningPrice != null) && (!mOpeningPrice.equals("")));
 	}
 	
 	@Expose
@@ -121,7 +121,7 @@ public class StockMarketData {
 	 * @return TRUE if contains closing price information.
 	 */
 	public boolean hasClosingPrice() {
-		return (mClosingPrice != null);
+		return ((mClosingPrice != null) && (!mClosingPrice.equals("")));
 	}
 	
 	@Expose
@@ -139,7 +139,7 @@ public class StockMarketData {
 	 * @return TRUE if contains the highest price information.
 	 */
 	public boolean hasHighestPrice() {
-		return (mHighestPrice != null);
+		return ((mHighestPrice != null) && (!mHighestPrice.equals("")));
 	}
 	
 	@Expose
@@ -157,7 +157,7 @@ public class StockMarketData {
 	 * @return TRUE if contains the lowest price information.
 	 */
 	public boolean hasLowestPrice() {
-		return (mLowestPrice != null);
+		return ((mLowestPrice != null) && (!mLowestPrice.equals("")));
 	}
 	
 	@Expose
@@ -175,7 +175,7 @@ public class StockMarketData {
 	 * @return TRUE if contains the change rate information.
 	 */
 	public boolean hasChangeRate() {
-		return (mChangeRate != null);
+		return ((mChangeRate != null) && (!mChangeRate.equals("")));
 	}
 	
 	@Expose
@@ -193,7 +193,7 @@ public class StockMarketData {
 	 * @return TRUE if contains the change amount information.
 	 */
 	public boolean hasChangeAmount() {
-		return (mChangeAmount != null);
+		return ((mChangeAmount != null) && (!mChangeAmount.equals("")));
 	}
 	
 	@Expose
@@ -211,7 +211,7 @@ public class StockMarketData {
 	 * @return TRUE if contains the volume information.
 	 */
 	public boolean hasVolume() {
-		return (mVolume != null);
+		return ((mVolume != null) && (!mVolume.equals("")));
 	}
 	
 	@Expose
@@ -229,7 +229,7 @@ public class StockMarketData {
 	 * @return TRUE if contains amount information.
 	 */
 	public boolean hasAmount() {
-		return (mAmount != null);
+		return ((mAmount != null) && (!mAmount.equals("")));
 	}
 	
 	@Expose
@@ -247,7 +247,7 @@ public class StockMarketData {
 	 * @return TRUE if contains intent information.
 	 */
 	public boolean hasIntentInfo() {
-		return (mIntent != null);
+		return ((mIntent != null) && (!mIntent.equals("")));
 	}
 	
 	@Expose
@@ -265,7 +265,7 @@ public class StockMarketData {
 	 * @return TRUE if contains date-time information.
 	 */
 	public boolean hasTime() {
-		return (mTime != null);
+		return ((mTime != null) && (!mTime.equals("")));
 	}
 	
 	@Expose

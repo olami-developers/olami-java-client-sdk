@@ -86,7 +86,7 @@ public class ExtendInfo {
 	 * @return TRUE if contains Festival information.
 	 */
 	public boolean hasFestival() {
-		return (mFestival != null);
+		return ((mFestival != null) && (!mFestival.equals("")));
 	}
 
 	@Expose
@@ -104,7 +104,7 @@ public class ExtendInfo {
 	 * @return TRUE if contains Jieqi information.
 	 */
 	public boolean hasJieqi() {
-		return (mJieqi != null);
+		return ((mJieqi != null) && (!mJieqi.equals("")));
 	}
 	
 }

@@ -38,7 +38,7 @@ public class NewsData {
 	 * @return TRUE if contains title.
 	 */
 	public boolean hasTitle() {
-		return (mTitle != null);
+		return ((mTitle != null) && (!mTitle.equals("")));
 	}
 	
 	@Expose
@@ -56,7 +56,7 @@ public class NewsData {
 	 * @return TRUE if contains date-time information.
 	 */
 	public boolean hasTime() {
-		return (mTime != null);
+		return ((mTime != null) && (!mTime.equals("")));
 	}
 	
 	@Expose
@@ -74,7 +74,7 @@ public class NewsData {
 	 * @return TRUE if contains image URL.
 	 */
 	public boolean hasImageURL() {
-		return (mImageURL != null);
+		return ((mImageURL != null) && (!mImageURL.equals("")));
 	}
 	
 	@Expose
@@ -92,7 +92,7 @@ public class NewsData {
 	 * @return TRUE if contains news detail.
 	 */
 	public boolean hasDetail() {
-		return (mDetail != null);
+		return ((mDetail != null) && (!mDetail.equals("")));
 	}
 	
 	@Expose
@@ -110,7 +110,7 @@ public class NewsData {
 	 * @return TRUE if contains source URL.
 	 */
 	public boolean hasSourceURL() {
-		return (mRefURL != null);
+		return ((mRefURL != null) && (!mRefURL.equals("")));
 	}
 	
 	@Expose
@@ -128,7 +128,7 @@ public class NewsData {
 	 * @return TRUE if contains name of the source.
 	 */
 	public boolean hasSourceName() {
-		return (mSource != null);
+		return ((mSource != null) && (!mSource.equals("")));
 	}
 	
 }

@@ -38,7 +38,7 @@ public class JokeData {
 	 * @return TRUE if contains content.
 	 */
 	public boolean hasContent() {
-		return (mContent != null);
+		return ((mContent != null) && (!mContent.equals("")));
 	}
 	
 }

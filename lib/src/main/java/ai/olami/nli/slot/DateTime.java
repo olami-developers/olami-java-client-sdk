@@ -42,7 +42,7 @@ public class DateTime {
 	 * @return TRUE if contains Type information.
 	 */
 	public boolean hasType() {
-		return (mType != null);
+		return ((mType != null) && (!mType.equals("")));
 	}
 	
 	@Expose

@@ -67,7 +67,7 @@ public class DescObject {
 	 * @return TRUE if contains chat reply.
 	 */
 	public boolean hasReplyAnswer() {
-		return (mResult != null);
+		return ((mResult != null) && (!mResult.equals("")));
 	}
 	
 	@Expose
@@ -100,7 +100,7 @@ public class DescObject {
 	 * @return TRUE if contains type information.
 	 */
 	public boolean hasType() {
-		return (mType != null);
+		return ((mType != null) && (!mType.equals("")));
 	}
 	
 	@Expose
@@ -120,7 +120,7 @@ public class DescObject {
 	 * @return TRUE if contains URL information.
 	 */
 	public boolean hasURL() {
-		return (mURL != null);
+		return ((mURL != null) && (!mURL.equals("")));
 	}
 		
 	@Expose
@@ -140,7 +140,7 @@ public class DescObject {
 	 * @return TRUE if contains name information.
 	 */
 	public boolean hasName() {
-		return (mName != null);
+		return ((mName != null) && (!mName.equals("")));
 	}
 	
 	@Expose
@@ -160,7 +160,7 @@ public class DescObject {
 	 * @return TRUE if contains source currency information.
 	 */
 	public boolean hasSourceCurrency() {
-		return (mSourceCurrency != null);
+		return ((mSourceCurrency != null) && (!mSourceCurrency.equals("")));
 	}
 	
 }

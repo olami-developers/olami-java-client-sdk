@@ -38,7 +38,7 @@ public class UnitConvertData {
 	 * @return TRUE if contains reply content information.
 	 */
 	public boolean hasContent() {
-		return (mContent != null);
+		return ((mContent != null) && (!mContent.equals("")));
 	}
 	
 	@Expose
@@ -56,7 +56,7 @@ public class UnitConvertData {
 	 * @return TRUE if contains source value.
 	 */
 	public boolean hasSourceValue() {
-		return (mSourceValue != null);
+		return ((mSourceValue != null) && (!mSourceValue.equals("")));
 	}
 	
 	@Expose
@@ -74,7 +74,7 @@ public class UnitConvertData {
 	 * @return TRUE if contains source unit.
 	 */
 	public boolean hasSourceUnit() {
-		return (mSourceUnit != null);
+		return ((mSourceUnit != null) && (!mSourceUnit.equals("")));
 	}
 	
 	@Expose
@@ -92,7 +92,7 @@ public class UnitConvertData {
 	 * @return TRUE if contains destination value.
 	 */
 	public boolean hasDestinationValue() {
-		return (mDestinationValue != null);
+		return ((mDestinationValue != null) && (!mDestinationValue.equals("")));
 	}
 	
 	@Expose
@@ -110,7 +110,7 @@ public class UnitConvertData {
 	 * @return TRUE if contains destination unit.
 	 */
 	public boolean hasDestinationUnit() {
-		return (mDestinationUnit != null);
+		return ((mDestinationUnit != null) && (!mDestinationUnit.equals("")));
 	}
 	
 }

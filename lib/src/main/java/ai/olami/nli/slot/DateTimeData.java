@@ -63,7 +63,7 @@ public class DateTimeData {
 	 * @return TRUE if contains SubType information.
 	 */
 	public boolean hasSubType() {
-		return (mSubType != null);
+		return ((mSubType != null) && (!mSubType.equals("")));
 	}
 
 	@Expose

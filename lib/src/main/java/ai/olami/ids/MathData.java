@@ -38,7 +38,7 @@ public class MathData {
 	 * @return TRUE if contains reply content information.
 	 */
 	public boolean hasContent() {
-		return (mContent != null);
+		return ((mContent != null) && (!mContent.equals("")));
 	}
 	
 	@Expose
@@ -56,7 +56,7 @@ public class MathData {
 	 * @return TRUE if contains result.
 	 */
 	public boolean hasResult() {
-		return (mResult != null);
+		return ((mResult != null) && (!mResult.equals("")));
 	}
 	
 }

@@ -41,7 +41,7 @@ public class NumDetail {
 	 * @return TRUE if contains RecommendValue information.
 	 */
 	public boolean hasRecommendValue() {
-		return (mRecommendValue != null);
+		return ((mRecommendValue != null) && (!mRecommendValue.equals("")));
 	}
 	
 	@Expose
@@ -59,7 +59,7 @@ public class NumDetail {
 	 * @return TRUE if contains Type information.
 	 */
 	public boolean hasType() {
-		return (mType != null);
+		return ((mType != null) && (!mType.equals("")));
 	}
 	
 }

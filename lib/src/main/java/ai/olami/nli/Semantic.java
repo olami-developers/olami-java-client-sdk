@@ -40,7 +40,7 @@ public class Semantic {
 	 * @return TRUE if contains GlobalModifier information.
 	 */
 	public boolean hasGlobalModifiers() {
-		return (mGlobalModifiers != null);
+		return ((mGlobalModifiers != null) && (mGlobalModifiers.length > 0));
 	}
 	
 	@Expose
@@ -60,7 +60,7 @@ public class Semantic {
 	 * @return TRUE if contains AppModule information.
 	 */
 	public boolean hasAppModule() {
-		return (mAppModule != null);
+		return ((mAppModule != null) && (!mAppModule.equals("")));
 	}
 	
 	@Expose
@@ -78,7 +78,7 @@ public class Semantic {
 	 * @return TRUE if contains Input information.
 	 */
 	public boolean hasInput() {
-		return (mInput != null);
+		return ((mInput != null) && (!mInput.equals("")));
 	}
 
 	@Expose
@@ -96,7 +96,7 @@ public class Semantic {
 	 * @return TRUE if contains Slots information.
 	 */
 	public boolean hasSlots() {
-		return (mSlots != null);
+		return ((mSlots != null) && (mSlots.length > 0));
 	}
 	
 }

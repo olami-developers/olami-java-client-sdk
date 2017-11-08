@@ -80,7 +80,7 @@ public class BaikeData {
 	 * @return TRUE if contains photo URL.
 	 */
 	public boolean hasPhotoURL() {
-		return (mPhotoURL != null);
+		return ((mPhotoURL != null) && (!mPhotoURL.equals("")));
 	}
 	
 	@Expose
@@ -98,7 +98,7 @@ public class BaikeData {
 	 * @return TRUE if contains type information.
 	 */
 	public boolean hasType() {
-		return (mType != null);
+		return ((mType != null) && (!mType.equals("")));
 	}
 	
 	@Expose
@@ -116,7 +116,7 @@ public class BaikeData {
 	 * @return TRUE if contains description.
 	 */
 	public boolean hasDescription() {
-		return (mDescription != null);
+		return ((mDescription != null) && (!mDescription.equals("")));
 	}
 	
 	@Expose
@@ -134,7 +134,7 @@ public class BaikeData {
 	 * @return TRUE if contains category list of the result.
 	 */
 	public boolean hasCategoryList() {
-		return (mCategoryList != null);
+		return ((mCategoryList != null) && (mCategoryList.length > 0));
 	}
 	
 	@Expose
@@ -152,7 +152,7 @@ public class BaikeData {
 	 * @return TRUE if contains category list of the result.
 	 */
 	public boolean hasHighlights() {
-		return (mHighlights != null);
+		return ((mHighlights != null) && (mHighlights.length > 0));
 	}
 	
 }

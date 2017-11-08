@@ -38,7 +38,7 @@ public class TVProgramData {
 	 * @return TRUE if contains TV program name.
 	 */
 	public boolean hasName() {
-		return (mName != null);
+		return ((mName != null) && (!mName.equals("")));
 	}
 	
 	@Expose
@@ -56,7 +56,7 @@ public class TVProgramData {
 	 * @return TRUE if contains date-time information.
 	 */
 	public boolean hasTime() {
-		return (mTime != null);
+		return ((mTime != null) && (!mTime.equals("")));
 	}
 	
 	@Expose

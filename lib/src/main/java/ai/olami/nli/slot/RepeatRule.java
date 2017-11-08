@@ -47,7 +47,7 @@ public class RepeatRule {
 	 * @return TRUE if contains IntervalUnit information.
 	 */
 	public boolean hasIntervalUnit() {
-		return (mIntervalUnit != null);
+		return ((mIntervalUnit != null) && (!mIntervalUnit.equals("")));
 	}
 	
 	@Expose

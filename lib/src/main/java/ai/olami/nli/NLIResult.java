@@ -68,7 +68,7 @@ public class NLIResult {
 	 * @return TRUE if contains semantics information.
 	 */
 	public boolean hasSemantics() {
-		return (mSemantics != null);
+		return ((mSemantics != null) && (mSemantics.length > 0));
 	}
 	
 	@Expose
@@ -86,7 +86,7 @@ public class NLIResult {
 	 * @return TRUE if contains type information.
 	 */
 	public boolean hasType() {
-		return (mType != null);
+		return ((mType != null) && (!mType.equals("")));
 	}
 	
 	/**

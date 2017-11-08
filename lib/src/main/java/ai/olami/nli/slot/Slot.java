@@ -38,7 +38,7 @@ public class Slot {
 	 * @return TRUE if contains Name information.
 	 */
 	public boolean hasName() {
-		return (mName != null);
+		return ((mName != null) && (!mName.equals("")));
 	}
 
 	@Expose
@@ -56,7 +56,7 @@ public class Slot {
 	 * @return TRUE if contains Value information.
 	 */
 	public boolean hasValue() {
-		return (mValue != null);
+		return ((mValue != null) && (!mValue.equals("")));
 	}
 
 	@Expose
@@ -74,7 +74,7 @@ public class Slot {
 	 * @return TRUE if contains Modifier information.
 	 */
 	public boolean hasModifiers() {
-		return (mModifiers != null);
+		return ((mModifiers != null) && (mModifiers.length > 0));
 	}
 
 	@Expose

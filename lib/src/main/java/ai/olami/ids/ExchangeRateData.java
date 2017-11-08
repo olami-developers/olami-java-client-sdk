@@ -38,7 +38,7 @@ public class ExchangeRateData {
 	 * @return TRUE if contains target currency.
 	 */
 	public boolean hasTargetCurrency() {
-		return (mTargetCurrency != null);
+		return ((mTargetCurrency != null) && (!mTargetCurrency.equals("")));
 	}
 	
 }

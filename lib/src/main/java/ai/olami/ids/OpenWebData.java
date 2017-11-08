@@ -38,7 +38,7 @@ public class OpenWebData {
 	 * @return TRUE if contains URL.
 	 */
 	public boolean hasURL() {
-		return (mURL != null);
+		return ((mURL != null) && (!mURL.equals("")));
 	}
 	
 }

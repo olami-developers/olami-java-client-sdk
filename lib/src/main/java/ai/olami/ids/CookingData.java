@@ -38,7 +38,7 @@ public class CookingData {
 	 * @return TRUE if contains content information.
 	 */
 	public boolean hasContent() {
-		return (mContent != null);
+		return ((mContent != null) && (!mContent.equals("")));
 	}
 	
 	@Expose
@@ -56,7 +56,7 @@ public class CookingData {
 	 * @return TRUE if contains name information.
 	 */
 	public boolean hasName() {
-		return (mName != null);
+		return ((mName != null) && (!mName.equals("")));
 	}
 	
 }
