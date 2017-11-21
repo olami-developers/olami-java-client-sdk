@@ -108,8 +108,7 @@ public class DumpNLIResultsExample {
 										datetime.getType());
 								// ai.olami.nli.slot.DateTimeData
 								DateTimeData dtd = datetime.getData();
-								System.out.format("|\t\t   - data: %s\n",
-										dtd.getStartTime());
+								System.out.format("|\t\t   - data:\n");
 								System.out.format("|\t\t   \t- starttime: %s\n",
 										dtd.getStartTime());
 								System.out.format("|\t\t   \t- endtime: %s\n",

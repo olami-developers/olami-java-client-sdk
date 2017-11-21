@@ -4,7 +4,7 @@
     
     <groupId>ai.olami.example</groupId>
     <artifactId>dump-nli-results-example</artifactId>
-    <version>20170708</version>
+    <version>20171121</version>
     <packaging>jar</packaging>
 
     <name>OLAMI Java Client Examples: Dump NLI Results</name>
