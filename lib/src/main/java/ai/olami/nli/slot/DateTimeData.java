@@ -28,23 +28,23 @@ public class DateTimeData {
 
 	@Expose
 	@SerializedName("start_time")
-	private int mStartTime = -1;
+	private long mStartTime = -1;
 		
 	/**
 	 * @return Start time.
 	 */
-	public int getStartTime() {
+	public long getStartTime() {
 		return mStartTime;
 	}
 
 	@Expose
 	@SerializedName("end_time")
-	private int mEndTime = -1;
+	private long mEndTime = -1;
 	
 	/**
 	 * @return End time.
 	 */	
-	public int getEndTime() {
+	public long getEndTime() {
 		return mEndTime;
 	}
 
