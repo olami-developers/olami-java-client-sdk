@@ -27,7 +27,7 @@ public class DateTimeData {
 	public static final String SUB_TYPE_REPEAT = "repeat";
 
 	@Expose
-	@SerializedName("starttime")
+	@SerializedName("start_time")
 	private int mStartTime = -1;
 		
 	/**
@@ -38,7 +38,7 @@ public class DateTimeData {
 	}
 
 	@Expose
-	@SerializedName("endtime")
+	@SerializedName("end_time")
 	private int mEndTime = -1;
 	
 	/**
