@@ -67,7 +67,7 @@ public class TextRecognizer extends APIRequestBase {
 	 */
 	public APIResponse requestWordSegmentation(String text) 
 			throws NoSuchAlgorithmException, IOException {
-		return sendRequest(APIConfiguration.API_NAME_SEG, text);
+		return sendRequest(APIConfiguration.API_NAME_SEG, text, null);
 	}
 	
 	/**
@@ -80,12 +80,29 @@ public class TextRecognizer extends APIRequestBase {
 	 */
 	public APIResponse requestNLI(String text) 
 			throws NoSuchAlgorithmException, IOException {
-		return sendRequest(APIConfiguration.API_NAME_NLI, text);
+		return requestNLI(text, null);
+	}
+	
+	/**
+	 * Request Natural Language Interaction service by specified input text.
+	 * 
+	 * @param text - The text to be recognized.
+	 * @param nliConfig - NLIConfig object.
+	 * @return API response with Natural Language Interaction results.
+	 * @throws NoSuchAlgorithmException Failed to create signature.
+	 * @throws IOException HTTP connection failed, or other exceptions.
+	 */
+	public APIResponse requestNLI(
+			String text, 
+			NLIConfig nliConfig
+	) throws NoSuchAlgorithmException, IOException {
+		return sendRequest(APIConfiguration.API_NAME_NLI, text, nliConfig);
 	}
 	
 	private APIResponse sendRequest(
 			String apiName,
-			String text
+			String text,
+			NLIConfig nliConfig
 	) throws NoSuchAlgorithmException, IOException {
 		
 		StringBuffer httpQueryStringBuffer = new StringBuffer();
@@ -100,6 +117,9 @@ public class TextRecognizer extends APIRequestBase {
 			JsonObject rq = new JsonObject();
 			rq.addProperty("data_type", "stt");
 			rq.add("data", data);
+			if (nliConfig != null) {
+				rq.add("nli_config", nliConfig.toJsonElement());
+			}
 			httpQueryStringBuffer.append("rq=");
 			httpQueryStringBuffer.append(mGson.toJson(rq));
 		}

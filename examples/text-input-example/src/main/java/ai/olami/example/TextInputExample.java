@@ -22,6 +22,7 @@ import com.google.gson.Gson;
 
 import ai.olami.cloudService.APIConfiguration;
 import ai.olami.cloudService.APIResponse;
+import ai.olami.cloudService.NLIConfig;
 import ai.olami.cloudService.TextRecognizer;
 import ai.olami.nli.NLIResult;
 import ai.olami.util.GsonFactory;
@@ -89,6 +90,16 @@ public class TextInputExample {
 		System.out.println("\nRequest NLI analysis for : " + inputText);
 		// * Send text
 		APIResponse nliResponse = recoginzer.requestNLI(inputText);
+		//
+		// You can also send text with NLIConfig to append "nli_config" JSON object.
+		//
+		// For Example, try to replace 'requestNLI(inputText)' with the following sample code:
+		// ===================================================================
+		// NLIConfig nliConfig = new NLIConfig();
+		// nliConfig.setSlotName("myslot");
+		// APIResponse nliResponse = recoginzer.requestNLI(inputText, nliConfig);
+		// ===================================================================
+		//
 		System.out.println("\nOriginal Response : " + nliResponse.toString());
 		System.out.println("\n---------- dump ----------\n");
 		System.out.println(jsonDump.toJson(nliResponse));

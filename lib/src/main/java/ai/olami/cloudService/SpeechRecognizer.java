@@ -18,6 +18,7 @@
 
 package ai.olami.cloudService;
 
+import ai.olami.util.GsonFactory;
 import ai.olami.util.HttpClient;
 
 import java.io.File;
@@ -33,6 +34,9 @@ import java.util.LinkedList;
 import java.util.Map;
 
 import org.xiph.speex.SpeexEncoder;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class SpeechRecognizer extends APIRequestBase {
 
@@ -75,6 +79,8 @@ public class SpeechRecognizer extends APIRequestBase {
 	private int mAudioBufferListCurrentSize = 0;
 	private int mAudioBufferListAppendedSize = 0;
 	private LinkedList<byte[]> mAudioBufferList = new LinkedList<byte[]>();
+	
+	private Gson mGson = GsonFactory.getNormalGson();
 	
 	/**
 	 * Speech Recognizer to issue Cloud Speech Recognition API requests.
@@ -430,7 +436,7 @@ public class SpeechRecognizer extends APIRequestBase {
 	 */
 	public APIResponse requestRecognition(CookieSet identifier) 
 			throws IllegalArgumentException, IOException, NoSuchAlgorithmException {
-		return sendGetResultsRequest(identifier, SEQ_TYPE_SEG);
+		return sendGetResultsRequest(identifier, SEQ_TYPE_SEG, null);
 	}
 	
 	/**
@@ -445,10 +451,27 @@ public class SpeechRecognizer extends APIRequestBase {
 	 */
 	public APIResponse requestRecognitionWithNLI(CookieSet identifier) 
 			throws IllegalArgumentException, IOException, NoSuchAlgorithmException {
-		return sendGetResultsRequest(identifier, SEQ_TYPE_NLI);
+		return requestRecognitionWithNLI(identifier, null);
 	}
 	
-
+	/**
+	 * Request to get speech recognition results by specified task identifier.
+	 * Before you call this method, you must to upload audio by related methods first.
+	 * 
+	 * @param identifier - Identifier CookieSet.
+	 * @param nliConfig - NLIConfig object.
+	 * @return API response with speech recognition results and NLI results.
+	 * @throws IllegalArgumentException Invalid contents of the CookieSet.
+	 * @throws IOException HTTP connection failed, or other exceptions.
+	 * @throws NoSuchAlgorithmException Failed to create signature.
+	 */
+	public APIResponse requestRecognitionWithNLI(
+			CookieSet identifier,
+			NLIConfig nliConfig
+	) throws IllegalArgumentException, IOException, NoSuchAlgorithmException {
+		return sendGetResultsRequest(identifier, SEQ_TYPE_NLI, nliConfig);
+	}
+	
 	/**
 	 * Request to get speech recognition results by specified task identifier.
 	 * Before you call this method, you must to upload audio by related methods first.
@@ -459,9 +482,27 @@ public class SpeechRecognizer extends APIRequestBase {
 	 * @throws IOException HTTP connection failed, or other exceptions.
 	 * @throws NoSuchAlgorithmException Failed to create signature.
 	 */
-	public APIResponse requestRecognitionWithAll(CookieSet identifier) 
+	public APIResponse requestRecognitionWithAll(CookieSet identifier)
 			throws IllegalArgumentException, IOException, NoSuchAlgorithmException {
-		return sendGetResultsRequest(identifier, SEQ_TYPE_ALL);
+		return requestRecognitionWithAll(identifier, null);
+	}
+	
+	/**
+	 * Request to get speech recognition results by specified task identifier.
+	 * Before you call this method, you must to upload audio by related methods first.
+	 * 
+	 * @param identifier - Identifier CookieSet.
+	 * @param nliConfig - NLIConfig object.
+	 * @return API response with all kinds of recognition results.
+	 * @throws IllegalArgumentException Invalid contents of the CookieSet.
+	 * @throws IOException HTTP connection failed, or other exceptions.
+	 * @throws NoSuchAlgorithmException Failed to create signature.
+	 */
+	public APIResponse requestRecognitionWithAll(
+			CookieSet identifier,
+			NLIConfig nliConfig
+	) throws IllegalArgumentException, IOException, NoSuchAlgorithmException {
+		return sendGetResultsRequest(identifier, SEQ_TYPE_ALL, nliConfig);
 	}
 	
 	private APIResponse uploadAudioData(
@@ -512,7 +553,8 @@ public class SpeechRecognizer extends APIRequestBase {
 	
 	private APIResponse sendGetResultsRequest(
 			CookieSet identifier, 
-			String seqType
+			String seqType,
+			NLIConfig nliConfig
 	) throws IllegalArgumentException, IOException, NoSuchAlgorithmException {	
 		
 		String cookies = identifier.getContents().toString();
@@ -523,6 +565,14 @@ public class SpeechRecognizer extends APIRequestBase {
 		final Map<String, String> queryParams = new HashMap<String, String>();
 		queryParams.put("compress", (mEncodeToSpeex ? "1" : "0"));
 		queryParams.put("seq", seqType);
+		
+		JsonObject rq = new JsonObject();
+		if (seqType.contains(SEQ_TYPE_NLI)) {
+			if (nliConfig != null) {
+				rq.add("nli_config", nliConfig.toJsonElement());
+			}
+		}
+		queryParams.put("rq", mGson.toJson(rq));
 		
 		final URL url = new URL(getConfiguration().getBaseRequestURL(mApiName, queryParams));
 		final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();

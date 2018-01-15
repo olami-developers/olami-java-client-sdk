@@ -28,6 +28,7 @@ import ai.olami.cloudService.APIResponse;
 import ai.olami.cloudService.SpeechRecognizer;
 import ai.olami.cloudService.SpeechResult;
 import ai.olami.cloudService.CookieSet;
+import ai.olami.cloudService.NLIConfig;
 import ai.olami.nli.NLIResult;
 import ai.olami.util.GsonFactory;
 
@@ -113,6 +114,17 @@ public class SpeechInputExample {
 				// * Get result by the task identifier you used for audio upload.
 				System.out.println("\nRequest CookieSet[" + cookie.getUniqueID() + "] speech result...");
 				response = recoginzer.requestRecognitionWithAll(cookie);
+				//
+				// You can also send text with NLIConfig to append "nli_config" JSON object.
+				//
+				// For Example,
+				// try to replace 'requestRecognitionWithAll(cookie)' with the following sample code:
+				// ===================================================================
+				// NLIConfig nliConfig = new NLIConfig();
+				// nliConfig.setSlotName("myslot");
+				// response = recoginzer.requestRecognitionWithAll(cookie, nliConfig);
+				// ===================================================================
+				//
 				System.out.println("\nOriginal Response : " + response.toString());
 				System.out.println("\n---------- dump ----------\n");
 				System.out.println(jsonDump.toJson(response));
