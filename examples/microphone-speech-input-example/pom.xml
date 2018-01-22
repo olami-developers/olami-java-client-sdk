@@ -1,0 +1,134 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>ai.olami.example</groupId>
+    <artifactId>microphone-speech-input-example</artifactId>
+    <version>20180120</version>
+    <packaging>jar</packaging>
+
+    <name>OLAMI Java Client Examples: Microphone Speech Input</name>
+    <url>http://olami.ai</url>
+    
+    <parent>
+        <groupId>ai.olami</groupId>
+        <artifactId>olami-java-client-sdk</artifactId>
+        <version>1.3.0</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ai.olami</groupId>
+            <artifactId>olami-java-client</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+            <!-- Build .exe file -->
+			<plugin>
+				<groupId>com.akathist.maven.plugins.launch4j</groupId>
+				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.7.21</version>
+				<executions>
+					<execution>
+						<id>l4j-clui</id>
+						<phase>package</phase>
+						<goals><goal>launch4j</goal></goals>
+						<configuration>
+							<headerType>console</headerType>
+							<outfile>target/${project.artifactId}.exe</outfile>
+							<jar>target/${project.artifactId}.jar</jar>
+							<errTitle>encc</errTitle>
+							<classPath>
+								<mainClass>ai.olami.example.MicrophoneSpeechGUIExample</mainClass>
+								<addDependencies>true</addDependencies>
+								<preCp>anything</preCp>
+							</classPath>
+							<jre>
+								<minVersion>1.7.0</minVersion>
+								<opts>
+									<opt>-Djava.endorsed.dirs=./endorsed</opt>
+								</opts>
+							</jre>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- End of build .exe file -->
+             <!-- Copy files to the 'bin' folder of the SDK root path -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <copy todir="../../bin/examples/${project.artifactId}">
+                                    <fileset dir="${project.build.directory}">
+                                        <!-- Copy packaged jar files -->
+                                        <include name="*${project.artifactId}.jar"/>
+                                        <include name="*${project.artifactId}.exe"/>
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- End of copy -->
+        </plugins>
+         <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <finalName>${project.artifactId}</finalName>
+                        <archive>
+                            <manifest>
+                                <mainClass>ai.olami.example.MicrophoneSpeechGUIExample</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

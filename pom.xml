@@ -60,8 +60,9 @@
 			<modules>
 				<module>examples/text-input-example</module>
 				<module>examples/speech-input-example</module>
+				<module>examples/microphone-speech-input-example</module>
 				<module>examples/dump-nli-results-example</module>
-		        <module>examples/async-text-chatbot-example</module>
+				<module>examples/async-text-chatbot-example</module>
 			</modules>
 		</profile>
 
