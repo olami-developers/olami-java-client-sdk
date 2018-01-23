@@ -55,8 +55,8 @@
 	</modules>
 	
 	<profiles>
-    	<profile>
-    		<id>all</id>
+		<profile>
+			<id>all</id>
 			<modules>
 				<module>examples/text-input-example</module>
 				<module>examples/speech-input-example</module>
@@ -66,9 +66,9 @@
 			</modules>
 		</profile>
 
-    	<profile>
-    		<id>release-sign-bintray</id>
-		    <distributionManagement>
+		<profile>
+			<id>release-sign-bintray</id>
+			<distributionManagement>
 				<repository>
 					<id>bintray-olami-developers-api-client</id>
 					<name>olami-developers-api-client</name>
@@ -108,8 +108,8 @@
 		            </plugin>
 		    	</plugins>
 		    </build>
-    	</profile>
-    </profiles>
+		</profile>
+	</profiles>
 	
     <build>
         <pluginManagement>

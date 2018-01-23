@@ -55,6 +55,10 @@ public class MicrophoneSpeechRecognizerExample {
 	private boolean mStarted = false;
 	private boolean mCancel = false;
 	
+	private int mAudioChannels = 1;
+	private int mAudioFrameSize = 640;
+	private int mAudioSampleSize = 16;
+	private int mAudioSampleRate = 16000;
 	private AudioFormat mAudioFormat = null;
 	private DataLine.Info mDataLineInfo = null;
 	private TargetDataLine mTargetDataLine = null;
@@ -76,6 +80,11 @@ public class MicrophoneSpeechRecognizerExample {
 		// * Optional steps: Setup some other configurations.
 		mRecoginzer.setEndUserIdentifier("Someone");
 		mRecoginzer.setTimeout(10000); 
+		
+		// Initialize audio format
+		mAudioFrameSize = mRecoginzer.getAudioFrameSize();
+		mAudioFormat = new AudioFormat(mAudioSampleRate, mAudioSampleSize, mAudioChannels, true, false);
+		mDataLineInfo = new DataLine.Info(TargetDataLine.class, mAudioFormat);
 	}
 	
 	/**
@@ -124,20 +133,14 @@ public class MicrophoneSpeechRecognizerExample {
 			@Override
 			public void run() {
 				try {
-					// Initialize the audio input.
-					int channels = 1;
-					int frameSize = mRecoginzer.getAudioFrameSize();
-					int sampleSize = 16;
-					int sampleRate = 16000;
-					mAudioFormat = new AudioFormat(sampleRate, sampleSize, channels, true, false);
-					mDataLineInfo = new DataLine.Info(TargetDataLine.class, mAudioFormat);
+					// Open the audio input.
 					mTargetDataLine = (TargetDataLine) AudioSystem.getLine(mDataLineInfo);
 					mTargetDataLine.open(mAudioFormat);
 					mTargetDataLine.start();
 					
 					// Set the maximum data size to each batch upload. 
 					// In this example, we will sending audio data every 0.5 seconds.
-					int uploadSize = (500 / SpeechRecognizer.AUDIO_LENGTH_MILLISECONDS_PER_FRAME) * frameSize;
+					int uploadSize = (500 / SpeechRecognizer.AUDIO_LENGTH_MILLISECONDS_PER_FRAME) * mAudioFrameSize;
 					
 					// Set audio buffer size to read.
 					int bufferSize = mRecoginzer.getAudioBufferMinSize();

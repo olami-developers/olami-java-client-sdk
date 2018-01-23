@@ -65,6 +65,7 @@ public class MicrophoneSpeechGUIExample {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		System.setProperty("file.encoding", "UTF-8");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -196,6 +197,7 @@ public class MicrophoneSpeechGUIExample {
 		gbConstraints.gridx = 1;
 		gbConstraints.gridy = 0;
 		topPanel.add(mServerListBox, gbConstraints);
+		mServerListBox.setFont(new Font("Arial Unicode MS", Font.PLAIN, 12));
 		mServerListBox.setSelectedIndex(mMicrophoneSpeechRecognizer.getAPIConfig().getLocalizeOption());
 		
 		gbConstraints = new GridBagConstraints();
@@ -228,7 +230,7 @@ public class MicrophoneSpeechGUIExample {
 		JScrollPane scrollPane = new JScrollPane();
 		framePanel.add(scrollPane, BorderLayout.CENTER);
 		mTextArea.setBorder(new EmptyBorder(5, 5, 5, 5));
-		mTextArea.setFont(new Font("Arial", Font.PLAIN, 16));
+		mTextArea.setFont(new Font("Arial Unicode MS", Font.PLAIN, 16));
 		mTextArea.setLineWrap(true);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setViewportView(mTextArea);
@@ -240,7 +242,7 @@ public class MicrophoneSpeechGUIExample {
 		bottomPanel.setBorder(new EmptyBorder(5, 0, 5, 0));
 		
 		mRecordButton.setPreferredSize(new Dimension(mRecordButton.getWidth(), 50));
-		mRecordButton.setFont(new Font("Arial", Font.PLAIN, 18));
+		mRecordButton.setFont(new Font("Arial Unicode MS", Font.PLAIN, 18));
 		mRecordButton.setEnabled(false);
 		mRecordButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -261,7 +263,7 @@ public class MicrophoneSpeechGUIExample {
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setPreferredSize(new Dimension(cancelButton.getWidth(), 50));
-		cancelButton.setFont(new Font("Arial", Font.PLAIN, 18));
+		cancelButton.setFont(new Font("Arial Unicode MS", Font.PLAIN, 18));
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cancelRecognizing();

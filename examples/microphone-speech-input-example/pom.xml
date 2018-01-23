@@ -4,7 +4,7 @@
     
     <groupId>ai.olami.example</groupId>
     <artifactId>microphone-speech-input-example</artifactId>
-    <version>20180120</version>
+    <version>20180123</version>
     <packaging>jar</packaging>
 
     <name>OLAMI Java Client Examples: Microphone Speech Input</name>
@@ -55,7 +55,7 @@
 				<executions>
 					<execution>
 						<id>l4j-clui</id>
-						<phase>package</phase>
+						<phase>install</phase>
 						<goals><goal>launch4j</goal></goals>
 						<configuration>
 							<headerType>console</headerType>
@@ -71,6 +71,7 @@
 								<minVersion>1.7.0</minVersion>
 								<opts>
 									<opt>-Djava.endorsed.dirs=./endorsed</opt>
+									<opt>-Dfile.encoding=UTF-8</opt>
 								</opts>
 							</jre>
 						</configuration>
