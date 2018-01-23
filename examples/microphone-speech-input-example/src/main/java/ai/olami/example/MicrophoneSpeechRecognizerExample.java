@@ -184,6 +184,7 @@ public class MicrophoneSpeechRecognizerExample {
 			@Override
 			public void run() {
 				try {
+					StringBuilder statusMessage = new StringBuilder();
 					while (!mCancel) {
 						Thread.sleep(300);
 						// Now we can try to get recognition result AFTER the first audio has been uploaded.
@@ -193,8 +194,24 @@ public class MicrophoneSpeechRecognizerExample {
 							if (response.ok()) {
 								if (response.hasData()) {
 									SpeechResult sttResult = response.getData().getSpeechResult();
+									// Send the status messages to the callback.
+									statusMessage.setLength(0);
+									statusMessage.append("Status : ").append(sttResult.getStatus()).append(" , ");
+									statusMessage.append("Completed : ").append(sttResult.complete() ? "YES" : "NO").append(" , ");
+									switch (sttResult.getSpeechStatus()) {
+										case SpeechResult.SPEECH_STATUS_GOOD_QUALITY:
+											statusMessage.append("Quality : ").append(" GOOD ");
+											break;
+										case SpeechResult.SPEECH_STATUS_WITH_NOISE:
+											statusMessage.append("Quality : ").append(" BAD  [ With Noise! ] ");
+											break;
+										default:
+											statusMessage.append("Quality : ").append(" UNKNOWN ");
+											break;
+									}
+									mCallback.onRecognizeStatusChange(statusMessage.toString());
 									// Send the speech-to-text result to the callback.
-									if (response.getData().getSpeechResult().getStatus() != SpeechResult.STATUS_RESULT_NOT_CHANGE) {
+									if (sttResult.getStatus() != SpeechResult.STATUS_RESULT_NOT_CHANGE) {
 										mCallback.onRecognizeResultChange(sttResult.getResult());
 									}
 									// Send a message to the callback if the recognition is completed.

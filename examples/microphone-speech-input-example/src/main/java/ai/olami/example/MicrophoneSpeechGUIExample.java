@@ -19,6 +19,7 @@
 package ai.olami.example;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
@@ -60,6 +61,7 @@ public class MicrophoneSpeechGUIExample {
 	private JTextField mAppSecretTextBox = new JTextField();
 	private JTextArea mTextArea = new JTextArea();
 	private JButton mRecordButton = new JButton(mRecStateText[0]);
+	private JLabel mStatusLabel = new JLabel("");
 
 	/**
 	 * Launch the application.
@@ -91,6 +93,11 @@ public class MicrophoneSpeechGUIExample {
 			// Do something when we get recognition results.
 			public void onRecognizeResultChange(String recognitionTextResult) {
 				mTextArea.setText(recognitionTextResult);
+			}
+			
+			// Do something when the voice analysis results of speech recognition changes.
+			public void onRecognizeStatusChange(String statusMessage) {
+				mStatusLabel.setText(statusMessage);
 			}
 			
 			// Do something when error occurs.
@@ -225,6 +232,15 @@ public class MicrophoneSpeechGUIExample {
 		gbConstraints.gridy = 2;
 		topPanel.add(mAppSecretTextBox, gbConstraints);
 		mAppSecretTextBox.setText(mMicrophoneSpeechRecognizer.getAPIConfig().getAppSecret());
+		
+		gbConstraints = new GridBagConstraints();
+		gbConstraints.fill = GridBagConstraints.BOTH;
+		gbConstraints.ipady = 10;
+		gbConstraints.gridx = 0;
+		gbConstraints.gridy = 3;
+		gbConstraints.gridwidth = 2;
+		topPanel.add(mStatusLabel, gbConstraints);
+		mStatusLabel.setForeground(Color.GRAY);
 		
 		// Center
 		JScrollPane scrollPane = new JScrollPane();

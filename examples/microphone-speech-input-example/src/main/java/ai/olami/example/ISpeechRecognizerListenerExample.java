@@ -32,6 +32,13 @@ public interface ISpeechRecognizerListenerExample {
  void onRecognizeResultChange(String recognitionTextResult);
  
  /**
+  * Callback when the status of speech recognition changes.
+  *
+  * @param statusMessage - Status Message.
+  */
+ void onRecognizeStatusChange(String statusMessage);
+ 
+ /**
   * Callback when error occurs.
   *
   * @param errorMessage - Error Message.
