@@ -42,6 +42,7 @@ public class SpeechRecognizer extends APIRequestBase {
 
 	public static final int AUDIO_TYPE_PCM_RAW = 0;
 	public static final int AUDIO_TYPE_PCM_WAVE = 1;
+	public static final int AUDIO_TYPE_PCM_SPEEX = 2;
 	
 	public static final int AUDIO_LENGTH_MILLISECONDS_PER_FRAME = 10;
 	public static final int AUDIO_SAMPLE_RATE = 16000;
@@ -147,6 +148,7 @@ public class SpeechRecognizer extends APIRequestBase {
 	 * @param audioType - Audio type: 
 	 *                    AUDIO_TYPE_PCM_RAW for PCM raw data.
 	 *                    AUDIO_TYPE_PCM_WAVE for Wave audio.
+	 *                    AUDIO_TYPE_PCM_SPEEX for PCM Speex audio.
 	 * @param isFinalAudio - TRUE if this is the last audio of a speech input.
 	 * @return API response with the audio uploading status.
 	 * @throws IOException File handling or HTTP connection failed, or other exceptions.
@@ -208,6 +210,7 @@ public class SpeechRecognizer extends APIRequestBase {
 	 * @param audioType - Audio type: 
 	 *                    AUDIO_TYPE_PCM_RAW for PCM raw data.
 	 *                    AUDIO_TYPE_PCM_WAVE for Wave audio.
+	 *                    AUDIO_TYPE_PCM_SPEEX for PCM Speex audio.
 	 * @param isFinalAudio - TRUE if this is the last audio of a speech input.
 	 * @return API response with the audio uploading status.
 	 * @throws IOException HTTP connection failed, or other exceptions.
@@ -244,6 +247,11 @@ public class SpeechRecognizer extends APIRequestBase {
 					audioSize = speexEncodeRawWavePCM(audioBuffer);
 				}
 				break;
+			
+			case AUDIO_TYPE_PCM_SPEEX:
+				audioBuffer = audioData;
+				audioSize = audioData.length;
+				break;
 				
 			default:
 				throw new IllegalArgumentException(EXMSG_INVALID_AUDIO_TYPE);
@@ -259,12 +267,15 @@ public class SpeechRecognizer extends APIRequestBase {
 	 * @param audioType - Audio type: 
 	 *                    AUDIO_TYPE_PCM_RAW for PCM raw data.
 	 *                    AUDIO_TYPE_PCM_WAVE for Wave audio.
+	 *                    AUDIO_TYPE_PCM_SPEEX for PCM Speex audio.
 	 */
 	public void setAudioType(int audioType) {
 		switch (audioType) {
 			case AUDIO_TYPE_PCM_RAW:
 				break;
 			case AUDIO_TYPE_PCM_WAVE:
+				break;
+			case AUDIO_TYPE_PCM_SPEEX:
 				break;
 			default:
 				throw new IllegalArgumentException(EXMSG_INVALID_AUDIO_TYPE);
@@ -314,7 +325,7 @@ public class SpeechRecognizer extends APIRequestBase {
 			byte[] tempData = new byte[audioSize]; 
 			System.arraycopy(audioFramesData, 0, tempData, 0, audioSize);
 			
-			if (mEncodeToSpeex) {
+			if ((mEncodeToSpeex) && (mAudioType != AUDIO_TYPE_PCM_SPEEX)) {
 				if ((audioSize < mAudioBufferListMinSize) 
 						|| ((audioSize % mSpeexProcessSize) != 0)) {
 					throw new IllegalArgumentException("The size of input data must be greater than " + mAudioBufferListMinSize + " (Bytes), and it must be a multiple of " + mSpeexProcessSize + " (Bytes).");
