@@ -65,6 +65,7 @@ public class SpeechRecognizer extends APIRequestBase {
 	
 	private static final String EXMSG_AUDIO_TYPE_NOT_SET = "Audio type has not been set! You must to specify the audio type by setAudioType(int audioType) before doing this.";
 	private static final String EXMSG_INVALID_AUDIO_TYPE = "Invalid audio type!";
+	private static final String EXMSG_MUST_BE_SPECIFIED_METHOD = "Not support this audio type!";
 	
 	private String mApiName = APIConfiguration.API_NAME_ASR;
 	private String mDefaultSeqType = SEQ_TYPE_SEG;
@@ -249,15 +250,40 @@ public class SpeechRecognizer extends APIRequestBase {
 				break;
 			
 			case AUDIO_TYPE_PCM_SPEEX:
-				audioBuffer = audioData;
-				audioSize = audioData.length;
-				break;
+				throw new UnsupportedOperationException(
+						EXMSG_MUST_BE_SPECIFIED_METHOD + "\nYou should use ** uploadSpeexAudio() ** method instead");
 				
 			default:
 				throw new IllegalArgumentException(EXMSG_INVALID_AUDIO_TYPE);
 		}
 		
 		return uploadAudioData(identifier, audioBuffer, audioSize, isFinalAudio);
+		
+	}
+	
+	/**
+	 * Request to upload the specified audio for speech recognition.
+	 * 
+	 * @param identifier - Identifier CookieSet.
+	 * @param audioData - The audio data.
+	 * @param audioDataRealSize - The real audio data size in the buffer.
+	 * @param isFinalAudio - TRUE if this is the last audio of a speech input.
+	 * @return API response with the audio uploading status.
+	 * @throws IOException HTTP connection failed, or other exceptions.
+	 * @throws NoSuchAlgorithmException Failed to create signature.
+	 */
+	public APIResponse uploadSpeexAudio(
+			CookieSet identifier,
+			byte[] audioData,
+			int audioDataRealSize,
+			boolean isFinalAudio
+	) throws IOException, NoSuchAlgorithmException {
+		
+		if (mAudioType != AUDIO_TYPE_PCM_SPEEX) {
+			throw new IllegalArgumentException(EXMSG_INVALID_AUDIO_TYPE + "\nOnly supports ** SPEEX ** audio data.");
+		}
+		
+		return uploadAudioData(identifier, audioData, audioDataRealSize, isFinalAudio);
 		
 	}
 	
@@ -314,10 +340,14 @@ public class SpeechRecognizer extends APIRequestBase {
 		
 		if (mAudioType == -1) {
 			throw new UnsupportedOperationException(EXMSG_AUDIO_TYPE_NOT_SET);
+		} else if (mAudioType == AUDIO_TYPE_PCM_SPEEX) {
+			throw new UnsupportedOperationException(
+					EXMSG_MUST_BE_SPECIFIED_METHOD + "\nYou should use ** appendSpeexAudioFramesData() ** method instead");
 		}
 		
 		if (mAudioBufferListAppendedSize > mAudioBufferListMaxSize) {
-			throw new IllegalStateException("The total size of append buffers is greater than the limited size (" + mAudioBufferListMaxSize + "). You have to flush for upload.");
+			throw new IllegalStateException(
+					"The total size of append buffers is greater than the limited size (" + mAudioBufferListMaxSize + "). You have to flush for upload.");
 		}
 		
 		synchronized (mAudioBufferList) {
@@ -325,10 +355,12 @@ public class SpeechRecognizer extends APIRequestBase {
 			byte[] tempData = new byte[audioSize]; 
 			System.arraycopy(audioFramesData, 0, tempData, 0, audioSize);
 			
-			if ((mEncodeToSpeex) && (mAudioType != AUDIO_TYPE_PCM_SPEEX)) {
+			if (mEncodeToSpeex) {
 				if ((audioSize < mAudioBufferListMinSize) 
 						|| ((audioSize % mSpeexProcessSize) != 0)) {
-					throw new IllegalArgumentException("The size of input data must be greater than " + mAudioBufferListMinSize + " (Bytes), and it must be a multiple of " + mSpeexProcessSize + " (Bytes).");
+					throw new IllegalArgumentException(
+							"The size of input data must be greater than " + mAudioBufferListMinSize + " (Bytes),"
+									+ " and it must be a multiple of " + mSpeexProcessSize + " (Bytes).");
 				}
 				audioSize = speexEncodeRawWavePCM(tempData);
 			}
@@ -340,6 +372,38 @@ public class SpeechRecognizer extends APIRequestBase {
 			mAudioBufferList.offer(appendData);
 			mAudioBufferListCurrentSize += audioSize;	
 			mAudioBufferListAppendedSize += audioFramesData.length;
+		}
+		
+		return mAudioBufferListAppendedSize;
+	}
+	
+	/**
+	 * Append audio data contains N frames to wait the upload for speech recognition.
+	 * The size of data in bytes must be a multiple of the size getAudioBufferMinSize() provides.
+	 * The total size of all of appended data must be less than or equal to the size getAudioBufferMaxSize() provides.
+	 * 
+	 * @param audioFramesData - The audio frames data. (Contains N frames) 
+	 * @param audioDataRealSize - The real audio data size in the buffer.
+	 * @return Total size of all of appended audio data.
+	 */
+	public int appendSpeexAudioFramesData(byte[] audioFramesData, int audioDataRealSize) {
+		
+		if (mAudioType != AUDIO_TYPE_PCM_SPEEX) {
+			throw new IllegalArgumentException(EXMSG_INVALID_AUDIO_TYPE + "\nOnly supports ** SPEEX ** audio data.");
+		}
+		
+		if (mAudioBufferListAppendedSize > mAudioBufferListMaxSize) {
+			throw new IllegalStateException(
+					"The total size of append buffers is greater than the limited size (" + mAudioBufferListMaxSize + "). You have to flush for upload.");
+		}
+		
+		synchronized (mAudioBufferList) {
+			byte[] appendData = new byte[audioDataRealSize];
+			System.arraycopy(audioFramesData, 0, appendData, 0, audioDataRealSize);
+		
+			mAudioBufferList.offer(appendData);
+			mAudioBufferListCurrentSize += audioDataRealSize;	
+			mAudioBufferListAppendedSize += audioDataRealSize;
 		}
 		
 		return mAudioBufferListAppendedSize;
@@ -382,7 +446,7 @@ public class SpeechRecognizer extends APIRequestBase {
 			mAudioBufferListAppendedSize = 0;
 		}
 		
-		if (!mEncodeToSpeex) {
+		if ((!mEncodeToSpeex) && (mAudioType != AUDIO_TYPE_PCM_SPEEX)) {
 			// When the user uses the batch upload, we do not know whether 
 			// the user is correctly handling the cutting of the audio data. 
 			// So, we may need to remove the original wave header.
@@ -524,7 +588,7 @@ public class SpeechRecognizer extends APIRequestBase {
 	) throws IOException, NoSuchAlgorithmException {
 				
 		final Map<String, String> queryParams = new HashMap<String, String>();
-		queryParams.put("compress", (mEncodeToSpeex ? "1" : "0"));
+		queryParams.put("compress", (mEncodeToSpeex ? "1" : (mAudioType == AUDIO_TYPE_PCM_SPEEX ? "1" : "0")));
 		queryParams.put("seq", mDefaultSeqType);
 		queryParams.put("stop", (isFinalAudio ? "1" : "0"));
 		
