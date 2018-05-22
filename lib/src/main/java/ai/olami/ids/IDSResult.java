@@ -40,6 +40,8 @@ public class IDSResult {
 		WEATHER ("weather", (new TypeToken<ArrayList<WeatherData>>() {}).getType()),
 		BAIKE ("baike", (new TypeToken<ArrayList<BaikeData>>() {}).getType()),
 		NEWS ("news", (new TypeToken<ArrayList<NewsData>>() {}).getType()),
+		KKBOX ("kkbox", (new TypeToken<ArrayList<KKBOXData>>() {}).getType()),
+		MUSIC_CONTROL ("MusicControl", (new TypeToken<ArrayList<MusicControlData>>() {}).getType()),
 		TV_PROGRAM ("tvprogram", (new TypeToken<ArrayList<TVProgramData>>() {}).getType()),
 		POEM ("poem", (new TypeToken<ArrayList<PoemData>>() {}).getType()),
 		JOKE ("joke", (new TypeToken<ArrayList<JokeData>>() {}).getType()),

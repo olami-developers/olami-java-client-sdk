@@ -26,7 +26,10 @@ import ai.olami.ids.ExchangeRateData;
 import ai.olami.ids.IDSResult;
 import ai.olami.ids.JokeData;
 import ai.olami.ids.MathData;
+import ai.olami.ids.MusicControlData;
 import ai.olami.ids.NewsData;
+import ai.olami.ids.KKBOXData;
+import ai.olami.ids.KKBOXDataPhoto;
 import ai.olami.ids.OpenWebData;
 import ai.olami.ids.PoemData;
 import ai.olami.ids.StockMarketData;
@@ -141,6 +144,93 @@ public class DumpIDSDataExample {
 						dataArray.get(x).getSourceName());
 				System.out.format("|\t\t- Image: %s\n",
 						dataArray.get(x).getImageURL());
+			}
+		}
+		
+		// ********************************************************************
+		// * KKBOX EXAMPLE
+		// *-------------------------------------------------------------------
+		// * Simplified Chinese (China): ** 简体中文服务地区尚不支持此模块 **
+		// * Traditional Chinese (Taiwan): 我要聽音樂
+		// ********************************************************************
+		// * Check to see if contains IDS KKBOX data
+		if (nliResult.getType().equals(IDSResult.Types.KKBOX.getName())) {
+			// Get all of KKBOXData into ArrayList.
+			ArrayList<KKBOXData> dataArray = nliResult.getDataObjects();
+			for (int x = 0; x < dataArray.size(); x++) {
+				System.out.format("|\t- IDS KKBOX Data[%s] :\n", x);
+				System.out.format("|\t\t- ID: %s\n",
+						dataArray.get(x).getID());
+				System.out.format("|\t\t- Duration: %s\n",
+						dataArray.get(x).getDuration());
+				System.out.format("|\t\t- Title: %s\n",
+						dataArray.get(x).getTitle());
+				System.out.format("|\t\t- Artist: [ID=%s], %s\n",
+						dataArray.get(x).getArtistID(), dataArray.get(x).getArtist());
+				System.out.format("|\t\t- Album: [ID=%s], %s\n",
+						dataArray.get(x).getAlbumID(), dataArray.get(x).getAlbum());
+				System.out.format("|\t\t- URL: %s\n",
+						dataArray.get(x).getURL());
+				// List photos
+				if (dataArray.get(x).hasPhotos()) {
+					KKBOXDataPhoto[] photoArray = dataArray.get(x).getPhotos();
+					for (int i = 0; i < photoArray.length; i++) {
+						System.out.format("|\t\t- Photo[%s]:\n", i);
+						System.out.format("|\t\t\t- Width:%s , Hight:%s\n", 
+								photoArray[i].getWidth(), photoArray[i].getHeight());
+						System.out.format("|\t\t\t- URL:%s\n",
+								photoArray[i].getURL());
+					}	
+				}
+			}
+		}
+		
+		// ********************************************************************
+		// * MUSIC CONTROL EXAMPLE
+		// *-------------------------------------------------------------------
+		// * Simplified Chinese (China): 下一首
+		// * Traditional Chinese (Taiwan): 下一首
+		// ********************************************************************
+		// * Check to see if contains IDS MusicControl data
+		if (nliResult.getType().equals(IDSResult.Types.MUSIC_CONTROL.getName())) {
+			// Get all of MusicControlData into ArrayList.
+			ArrayList<MusicControlData> dataArray = nliResult.getDataObjects();
+			for (int x = 0; x < dataArray.size(); x++) {
+				System.out.format("|\t- IDS MusicControl Data[%s] :\n", x);
+				System.out.format("|\t\t- Index: %s\n",
+						(dataArray.get(x).hasIndex() ? dataArray.get(x).getIndex() : "NO INDEX, [It means based on current/previous index] "));
+				System.out.format("|\t\t- Command: %s \n",
+						dataArray.get(x).getCommand());
+				if (dataArray.get(x).getCommand().equals(MusicControlData.NEXT)) {
+					System.out.println("|\t\t <播放下一首 / 播放下一首>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.PREVIOUS)) {
+					System.out.println("|\t\t <播放上一首 / 播放上一首>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.PAUSE)) {
+					System.out.println("|\t\t <暂停播放 / 暫停播放>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.PLAY)) {
+					System.out.println("|\t\t <开始播放 / 開始播放>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.RANDOM)) {
+					System.out.println("|\t\t <随机播放模式 / 隨機播放模式>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.LOOP)) {
+					System.out.println("|\t\t <循环播放模式 / 循環播放模式>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.ORDER)) {
+					System.out.println("|\t\t <顺序播放模式 / 順序播放模式>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.MUTE)) {
+					System.out.println("|\t\t <设置为静音 / 設置為靜音>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.VOLUME_UP)) {
+					System.out.println("|\t\t <音量增大 / 音量增大>");
+				}
+				if (dataArray.get(x).getCommand().equals(MusicControlData.VOLUME_DOWN)) {
+					System.out.println("|\t\t <音量减小 / 音量減小>");
+				}
 			}
 		}
 		
