@@ -35,6 +35,10 @@ public class NLIConfig {
 	@Expose
 	@SerializedName("slotname")
 	private String mSlotName = null;
+	
+	@Expose
+	@SerializedName("clear_talk_history")
+	private String mClearTalkHistory = null;
 
 	/**
 	 * Set slot name.
@@ -57,6 +61,27 @@ public class NLIConfig {
 		return ((mSlotName != null) && (!mSlotName.equals("")));
 	}
 	
+	/**
+	 * set clear_talk_history value
+	 */
+	public void setClearTalkHistory(String value) {
+		mClearTalkHistory = value;
+	}
+	
+	/**
+	 * @return clear_talk_history value
+	 */
+	public String getClearTalkHistory() {
+		return mClearTalkHistory;
+	}
+	
+	/**
+	 * @return TRUE if contains clear_talk_history.
+	 */
+	public boolean hasClearTalkHistory() {
+		return ((mClearTalkHistory != null) && (!mClearTalkHistory.equals("")));
+	}
+	
 	// Common Methods ------------------------------------------------------------------------------------
 	
 	/**
@@ -64,6 +89,7 @@ public class NLIConfig {
 	 */
 	public void reset() {
 		mSlotName = null;
+		mClearTalkHistory = null;
 	}
 	
 	/**
