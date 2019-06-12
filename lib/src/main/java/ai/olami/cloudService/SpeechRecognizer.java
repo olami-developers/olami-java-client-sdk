@@ -84,6 +84,8 @@ public class SpeechRecognizer extends APIRequestBase {
 	
 	private Gson mGson = GsonFactory.getNormalGson();
 	
+	private String mCookie2 = "";
+	
 	/**
 	 * Speech Recognizer to issue Cloud Speech Recognition API requests.
 	 * 
@@ -596,8 +598,12 @@ public class SpeechRecognizer extends APIRequestBase {
 		final URL url = new URL(getConfiguration().getBaseRequestURL(mApiName, queryParams));
 		final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 		httpConnection.setRequestMethod("POST");
-		if ((cookies != null) && (!cookies.equals(""))) {
+		if ((cookies != null) && (!cookies.equals("[]"))) {
 			httpConnection.setRequestProperty("Cookie", cookies);
+		}
+		
+		if(!mCookie2.equals("")) {
+			httpConnection.setRequestProperty("Cookie", mCookie2);
 		}
 		httpConnection.setRequestProperty("contentType", "utf-8");
 		httpConnection.setConnectTimeout(getTimeout());
@@ -612,6 +618,7 @@ public class SpeechRecognizer extends APIRequestBase {
 				response = httpClient.getResponseContent();
 				// Get cookie to setup speech task identifier.
 				identifier.setContents(httpClient.getCookies());
+				mCookie2 = httpClient.getCookies().get(0);
 				if (identifier.getContents() == null) {
 					throw new IOException("Failed to get cookie from server.");
 				}
@@ -633,6 +640,7 @@ public class SpeechRecognizer extends APIRequestBase {
 	) throws IllegalArgumentException, IOException, NoSuchAlgorithmException {	
 		
 		String cookies = identifier.getContents().toString();
+		cookies = cookies.substring(1,cookies.length()-1);
 		if (cookies == null) {
 			throw new IllegalArgumentException("Invalid contents of the CookieSet.");
 		}
@@ -647,12 +655,12 @@ public class SpeechRecognizer extends APIRequestBase {
 				rq.add("nli_config", nliConfig.toJsonElement());
 			}
 		}
-		queryParams.put("rq", mGson.toJson(rq));
+		//queryParams.put("rq", mGson.toJson(rq));
 		
 		final URL url = new URL(getConfiguration().getBaseRequestURL(mApiName, queryParams));
 		final HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 		httpConnection.setRequestMethod("GET");
-		httpConnection.setRequestProperty("Cookie", cookies);
+		httpConnection.setRequestProperty("Cookie", mCookie2);
 		httpConnection.setRequestProperty("contentType", "utf-8");
 		httpConnection.setConnectTimeout(getTimeout());
 		
